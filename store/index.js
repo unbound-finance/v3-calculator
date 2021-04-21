@@ -26,7 +26,10 @@ export const actions = {
     commit('SET_PRICE_LOADER', false)
   },
 
-  async calculateRange({ commit, state, dispatch }, { currency, percentage }) {
+  async calculateRange(
+    { commit, state, dispatch },
+    { currency, percentage, buy = 0, sell = 0 }
+  ) {
     await dispatch('fetchEthPrice')
     const ethPrice = Number(state.ethPrice)
     let target
@@ -36,6 +39,13 @@ export const actions = {
       target = ethPrice - (ethPrice * percentage) / 100
       ratio = target / ethPrice
       commit('SET_RANGE', { a: ratio ** 2 * ethPrice, b: ethPrice })
+    } else if (currency === 'ETH-DAI') {
+      const buyRatio = buy / ethPrice
+      const sellRatio = sell / ethPrice
+      commit('SET_RANGE', {
+        a: buyRatio ** 2 * ethPrice,
+        b: sellRatio ** 2 * ethPrice,
+      })
     } else {
       target = ethPrice + (ethPrice * percentage) / 100
       ratio = target / ethPrice

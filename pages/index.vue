@@ -9,9 +9,9 @@
         <span>I want to provide liquidity in</span>
         <currency-selector class="px-2" @selected="currencyHandler" />
       </div>
-      <div class="p-3 w-full">
+      <div v-if="currency !== 'ETH-DAI'" class="p-3 w-full">
         I want to
-        {{ currency == 'ETH-DAI' ? 'buy' : 'sell' }}
+        {{ currency == 'DAI' ? 'buy' : 'sell' }}
         <span>at</span>
         <div
           class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
@@ -23,13 +23,37 @@
           />
           <span>%</span>
         </div>
-        {{ currency == 'ETH-DAI' ? 'below' : 'above' }}
+        {{ currency == 'DAI' ? 'below' : 'above' }}
         <span
           >the current ETH price
           <span class="text-green-600 font-semibold"> ${{ ethPrice }}</span>
         </span>
       </div>
-      <div class="p-3 w-full"></div>
+      <div v-else class="p-3 w-full">
+        I want to buy at
+
+        <div
+          class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
+        >
+          <span>$</span>
+          <input
+            v-model="buy"
+            class="w-auto min-w-0 focus:outline-none font-semibold"
+            type="number"
+          />
+        </div>
+        and sell at
+        <div
+          class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
+        >
+          <span>$</span>
+          <input
+            v-model="sell"
+            class="w-auto min-w-0 focus:outline-none font-semibold"
+            type="number"
+          />
+        </div>
+      </div>
     </div>
     <button
       v-if="show"
@@ -75,6 +99,8 @@ export default {
       currency: null,
       percentage: 10,
       show: true,
+      buy: 1500,
+      sell: 2500,
       ui: {
         loading: false,
       },
@@ -106,6 +132,8 @@ export default {
       await this.$store.dispatch('calculateRange', {
         currency: this.currency,
         percentage: this.percentage,
+        buy: this.buy,
+        sell: this.sell,
       })
       this.ui.loading = false
       this.show = false
