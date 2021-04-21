@@ -1,0 +1,42 @@
+:root {
+  --color-loading-dots: 255, 255, 255;
+}
+
+.loading-dots[rgb] {
+  --color-loading-dots: 0, 255, 0;
+}
+
+.loading-dots[rgb]::before {
+  --color-loading-dots: 255, 0, 0;
+}
+
+.loading-dots[rgb]::after {
+  --color-loading-dots: 0, 0, 255;
+}
+
+.loading-dots {
+  color: white;
+  animation: loading-dots-blink 0.8s infinite 0.2s both;
+}
+
+.loading-dots::before,
+.loading-dots::after {
+  content: '.';
+  animation: loading-dots-blink 0.8s infinite 0s both;
+}
+
+.loading-dots::after {
+  animation-delay: 0.4s;
+}
+
+@keyframes loading-dots-blink {
+  0% {
+    color: rgba(var(--color-loading-dots), 0.2);
+  }
+  20% {
+    color: rgba(var(--color-loading-dots), 1);
+  }
+  100% {
+    color: rgba(var(--color-loading-dots), 0.2);
+  }
+}
