@@ -40,8 +40,10 @@ export const actions = {
       ratio = target / ethPrice
       commit('SET_RANGE', { a: ratio ** 2 * ethPrice, b: ethPrice })
     } else if (currency === 'ETH-DAI') {
-      const buyRatio = buy / ethPrice
-      const sellRatio = sell / ethPrice
+      const buyTarget = ethPrice - (ethPrice * buy) / 100
+      const sellTarget = ethPrice + (ethPrice * sell) / 100
+      const buyRatio = buyTarget / ethPrice
+      const sellRatio = sellTarget / ethPrice
       commit('SET_RANGE', {
         a: buyRatio ** 2 * ethPrice,
         b: sellRatio ** 2 * ethPrice,

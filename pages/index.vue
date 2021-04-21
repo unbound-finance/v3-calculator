@@ -12,7 +12,7 @@
       <div v-if="currency !== 'ETH-DAI'" class="p-3 w-full">
         I want to
         {{ currency == 'DAI' ? 'buy' : 'sell' }}
-        <span>at</span>
+        <span>ETH at</span>
         <div
           class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
         >
@@ -30,29 +30,32 @@
         </span>
       </div>
       <div v-else class="p-3 w-full">
-        I want to buy at
-
+        I want to buy ETH at
         <div
           class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
         >
-          <span>$</span>
           <input
             v-model="buy"
             class="w-auto min-w-0 focus:outline-none font-semibold"
             type="number"
           />
+          <span>%</span>
         </div>
-        and sell at
+        below and sell at
         <div
           class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
         >
-          <span>$</span>
           <input
             v-model="sell"
             class="w-auto min-w-0 focus:outline-none font-semibold"
             type="number"
           />
+          <span>%</span>
         </div>
+      </div>
+      <div v-if="currency == 'ETH-DAI'" class="p-3 w-full">
+        above the current ETH price
+        <span class="text-green-600 font-semibold"> ${{ ethPrice }}</span>
       </div>
     </div>
     <button
@@ -99,8 +102,8 @@ export default {
       currency: null,
       percentage: 10,
       show: true,
-      buy: 1500,
-      sell: 2500,
+      buy: 10,
+      sell: 10,
       ui: {
         loading: false,
       },
