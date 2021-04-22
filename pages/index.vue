@@ -117,14 +117,14 @@ export default {
   data() {
     return {
       currencies: ['ETH', 'DAI', 'ETH-DAI'],
-      days: [1, 7, 15, 30],
+      days: [7, 15, 30],
       indicators: [
         { id: 'pct', name: 'Percentage' },
         { id: 'bbands', name: 'Bollinger Bands' },
         { id: 'minmax', name: 'Min Max' },
       ],
       currency: null,
-      day: null,
+      day: 7,
       indicator: { id: 'pct', name: 'Percentage' },
       percentage: 10,
       show: true,
@@ -176,6 +176,8 @@ export default {
         buy: this.buy,
         sell: this.sell,
         indicator: this.indicator.id,
+        apollo: this.$apollo,
+        days: this.day,
       })
       this.ui.loading = false
       this.show = false

@@ -41,6 +41,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/apollo',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -51,5 +52,14 @@ export default {
 
   env: {
     taapiSecret: process.env.TAAPI_SECRET,
+  },
+
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint:
+          'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2',
+      },
+    },
   },
 }

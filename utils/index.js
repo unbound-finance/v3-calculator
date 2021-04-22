@@ -1,6 +1,6 @@
 import Axios from 'axios'
-
-const TAAPI_BASE_URL = 'https://api.taapi.io/'
+import { getHistoricalPrice } from '../data'
+import { bbands, minmax } from './indicators'
 
 export async function getEthPrice() {
   try {
@@ -45,19 +45,22 @@ export async function getEthPrice() {
   }
 }
 
-export async function getIndicatorValues(indicator, days) {
-  try {
-    const params = {
-      secret: process.env.taapiSecret,
-      exchange: 'binance',
-      symbol: 'ETH/USDT',
-      interval: '1d',
-      backtracks: days,
-    }
-    const data = await Axios.get(TAAPI_BASE_URL + indicator, { params })
-    console.log(data)
-    return data
-  } catch (error) {
-    throw new Error(error)
+export async function getIndicatorValues(apollo, indicator, days) {
+  const date = new Date()
+  const pastDate = new Date(date.getTime() - days * 24 * 60 * 60 * 1000)
+
+  const daysToTimestamp = Math.floor(pastDate.setHours(0, 0, 0, 0) / 1000)
+  const prices = await getHistoricalPrice(apollo, {
+    token: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+    timestamp: daysToTimestamp,
+  })
+  if (indicator === 'bbands') {
+    const { min, max } = bbands(prices)
+    return { min, max }
   }
+  if (indicator === 'minmax') {
+    const { min, max } = minmax(prices)
+    return { min, max }
+  }
+  return { min: 0, max: 0 }
 }

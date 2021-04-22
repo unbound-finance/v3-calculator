@@ -1,0 +1,5 @@
+query($timestamp: Int!, $token: String!) {
+  tokenDayDatas(where: { token: $token, date_gt: $timestamp }) {
+    priceUSD
+  }
+}

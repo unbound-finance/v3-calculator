@@ -26,16 +26,24 @@ export const actions = {
     commit('SET_PRICE_LOADER', false)
   },
 
-  async fetchIndicatorValues({ commit }, { indicator, days }) {
+  async fetchIndicatorValues({ commit }, { apollo, indicator, days }) {
     commit('SET_PRICE_LOADER', true)
-    const a = await getIndicatorValues(indicator, days)
+    const { min, max } = await getIndicatorValues(apollo, indicator, days)
     commit('SET_PRICE_LOADER', false)
-    return a
+    return { min, max }
   },
 
   async calculateRange(
     { commit, state, dispatch },
-    { currency, percentage, buy = 0, sell = 0, indicator = 'pct' }
+    {
+      currency,
+      percentage,
+      buy = 0,
+      sell = 0,
+      indicator = 'pct',
+      apollo,
+      days = 7,
+    }
   ) {
     if (indicator === 'pct') {
       await dispatch('fetchEthPrice')
@@ -62,11 +70,13 @@ export const actions = {
         commit('SET_RANGE', { a: ethPrice, b: ratio ** 2 * ethPrice })
       }
     } else {
-      const data = await dispatch('fetchIndicatorValues', {
+      console.log({ days })
+      const { min, max } = await dispatch('fetchIndicatorValues', {
+        apollo,
         indicator,
-        days: 1,
+        days,
       })
-      console.log(data)
+      commit('SET_RANGE', { a: min, b: max })
     }
   },
 }
