@@ -73,6 +73,24 @@ export const actions = {
         ratio = target / ethPrice
         commit('SET_RANGE', { a: ethPrice, b: ratio ** 2 * ethPrice })
       }
+    } else if (indicator === 'tgt') {
+      await dispatch('fetchEthPrice')
+      const ethPrice = Number(state.ethPrice)
+      let ratio
+      if (currency === 'DAI') {
+        ratio = percentage / ethPrice
+        commit('SET_RANGE', { a: ratio ** 2 * ethPrice, b: ethPrice })
+      } else if (currency === 'ETH-DAI') {
+        const buyRatio = buy / ethPrice
+        const sellRatio = sell / ethPrice
+        commit('SET_RANGE', {
+          a: buyRatio ** 2 * ethPrice,
+          b: sellRatio ** 2 * ethPrice,
+        })
+      } else {
+        ratio = percentage / ethPrice
+        commit('SET_RANGE', { a: ethPrice, b: ratio ** 2 * ethPrice })
+      }
     } else {
       const { min, max } = await dispatch('fetchIndicatorValues', {
         apollo,

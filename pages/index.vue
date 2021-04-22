@@ -16,13 +16,15 @@
       <div class="p-3 w-full">
         <span>Calculate my range by</span>
         <IndicatorSelector :options="indicators" @selected="indicatorHandler" />
-        <span v-if="indicator.id !== 'pct'">
+        <span v-if="indicator.id == 'bbands' || indicator.id == 'minmax'">
           and get last
           <DaysSelector class="px-2" :options="days" @selected="daysHandler" />
           day data</span
         >
       </div>
-      <div v-if="indicator && indicator.id === 'pct'">
+      <div
+        v-if="indicator && (indicator.id === 'pct' || indicator.id === 'tgt')"
+      >
         <div v-if="currency !== 'ETH-DAI'" class="p-3 w-full">
           I want to
           {{ currency == 'DAI' ? 'buy' : 'sell' }}
@@ -30,12 +32,13 @@
           <div
             class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
           >
+            <span v-if="indicator.id === 'tgt'">$</span>
             <input
               v-model="percentage"
               class="w-auto min-w-0 focus:outline-none font-semibold"
               type="number"
             />
-            <span>%</span>
+            <span v-if="indicator.id === 'pct'">%</span>
           </div>
           {{ currency == 'DAI' ? 'below' : 'above' }}
           <span
@@ -48,23 +51,25 @@
           <div
             class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
           >
+            <span v-if="indicator.id === 'tgt'">$</span>
             <input
               v-model="buy"
               class="w-auto min-w-0 focus:outline-none font-semibold"
               type="number"
             />
-            <span>%</span>
+            <span v-if="indicator.id === 'pct'">%</span>
           </div>
           below and sell at
           <div
             class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
           >
+            <span v-if="indicator.id === 'tgt'">$</span>
             <input
               v-model="sell"
               class="w-auto min-w-0 focus:outline-none font-semibold"
               type="number"
             />
-            <span>%</span>
+            <span v-if="indicator.id === 'pct'">%</span>
           </div>
         </div>
         <div v-if="currency == 'ETH-DAI'" class="p-3 w-full">
@@ -130,6 +135,7 @@ export default {
       days: [7, 15, 30],
       indicators: [
         { id: 'pct', name: 'Percentage' },
+        { id: 'tgt', name: 'Target Price' },
         { id: 'bbands', name: 'Bollinger Bands' },
         { id: 'minmax', name: 'Min Max' },
       ],
@@ -138,8 +144,8 @@ export default {
       indicator: { id: 'pct', name: 'Percentage' },
       percentage: 10,
       show: true,
-      buy: 10,
-      sell: 10,
+      buy: 0,
+      sell: 0,
       ui: {
         loading: false,
       },
