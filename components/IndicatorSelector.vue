@@ -10,7 +10,7 @@
       class="text-sm"
       :value="option"
     >
-      {{ option }}
+      {{ option.name }}
     </option>
   </select>
 </template>

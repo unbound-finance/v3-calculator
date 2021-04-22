@@ -1,5 +1,7 @@
 import Axios from 'axios'
 
+const TAAPI_BASE_URL = 'https://api.taapi.io/'
+
 export async function getEthPrice() {
   try {
     const data = JSON.stringify({
@@ -40,5 +42,22 @@ export async function getEthPrice() {
     }
   } catch (error) {
     throw new Error('Something went wrong', error)
+  }
+}
+
+export async function getIndicatorValues(indicator, days) {
+  try {
+    const params = {
+      secret: process.env.taapiSecret,
+      exchange: 'binance',
+      symbol: 'ETH/USDT',
+      interval: '1d',
+      backtracks: days,
+    }
+    const data = await Axios.get(TAAPI_BASE_URL + indicator, { params })
+    console.log(data)
+    return data
+  } catch (error) {
+    throw new Error(error)
   }
 }

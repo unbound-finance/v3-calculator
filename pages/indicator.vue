@@ -3,74 +3,63 @@
     class="container min-h-screen flex flex-col space-y-8 items-center justify-center"
   >
     <div
-      class="text-gray-700 font-medium text-base lg:text-2xl flex flex-wrap -m-3 items-center justify-center"
+      class="text-gray-700 font-medium text-base lg:text-3xl flex flex-wrap -m-3 items-center"
     >
       <div class="p-3 w-full">
         <span>I want to provide liquidity in</span>
-        <CurrencySelector
+        <currency-selector
           class="px-2"
           :options="currencies"
           @selected="currencyHandler"
         />
       </div>
-      <div class="p-3 w-full">
-        <span>Calculate my range by</span>
-        <IndicatorSelector :options="indicators" @selected="indicatorHandler" />
-        <span v-if="indicator.id !== 'pct'">
-          and get last
-          <DaysSelector class="px-2" :options="days" @selected="daysHandler" />
-          day data</span
+      <div v-if="currency !== 'ETH-DAI'" class="p-3 w-full">
+        I want to
+        {{ currency == 'DAI' ? 'buy' : 'sell' }}
+        <span>ETH at</span>
+        <div
+          class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
         >
-      </div>
-      <div v-if="indicator && indicator.id === 'pct'">
-        <div v-if="currency !== 'ETH-DAI'" class="p-3 w-full">
-          I want to
-          {{ currency == 'DAI' ? 'buy' : 'sell' }}
-          <span>ETH at</span>
-          <div
-            class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
-          >
-            <input
-              v-model="percentage"
-              class="w-auto min-w-0 focus:outline-none font-semibold"
-              type="number"
-            />
-            <span>%</span>
-          </div>
-          {{ currency == 'DAI' ? 'below' : 'above' }}
-          <span
-            >the current ETH price
-            <span class="text-green-600 font-semibold"> ${{ ethPrice }}</span>
-          </span>
+          <input
+            v-model="percentage"
+            class="w-auto min-w-0 focus:outline-none font-semibold"
+            type="number"
+          />
+          <span>%</span>
         </div>
-        <div v-else class="p-3 w-full">
-          I want to buy ETH at
-          <div
-            class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
-          >
-            <input
-              v-model="buy"
-              class="w-auto min-w-0 focus:outline-none font-semibold"
-              type="number"
-            />
-            <span>%</span>
-          </div>
-          below and sell at
-          <div
-            class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
-          >
-            <input
-              v-model="sell"
-              class="w-auto min-w-0 focus:outline-none font-semibold"
-              type="number"
-            />
-            <span>%</span>
-          </div>
-        </div>
-        <div v-if="currency == 'ETH-DAI'" class="p-3 w-full">
-          above the current ETH price
+        {{ currency == 'DAI' ? 'below' : 'above' }}
+        <span
+          >the current ETH price
           <span class="text-green-600 font-semibold"> ${{ ethPrice }}</span>
+        </span>
+      </div>
+      <div v-else class="p-3 w-full">
+        I want to buy ETH at
+        <div
+          class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
+        >
+          <input
+            v-model="buy"
+            class="w-auto min-w-0 focus:outline-none font-semibold"
+            type="number"
+          />
+          <span>%</span>
         </div>
+        below and sell at
+        <div
+          class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
+        >
+          <input
+            v-model="sell"
+            class="w-auto min-w-0 focus:outline-none font-semibold"
+            type="number"
+          />
+          <span>%</span>
+        </div>
+      </div>
+      <div v-if="currency == 'ETH-DAI'" class="p-3 w-full">
+        above the current ETH price
+        <span class="text-green-600 font-semibold"> ${{ ethPrice }}</span>
       </div>
     </div>
     <button
@@ -110,22 +99,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import IndicatorSelector from '~/components/IndicatorSelector.vue'
 
 export default {
-  components: { IndicatorSelector },
   data() {
     return {
       currencies: ['ETH', 'DAI', 'ETH-DAI'],
-      days: [1, 7, 15, 30],
-      indicators: [
-        { id: 'pct', name: 'Percentage' },
-        { id: 'bbands', name: 'Bollinger Bands' },
-        { id: 'minmax', name: 'Min Max' },
-      ],
       currency: null,
-      day: null,
-      indicator: { id: 'pct', name: 'Percentage' },
       percentage: 10,
       show: true,
       buy: 10,
@@ -148,12 +127,6 @@ export default {
     currency() {
       this.$store.dispatch('fetchEthPrice')
     },
-    indicator: {
-      handler() {
-        this.show = true
-      },
-      deep: true,
-    },
   },
   mounted() {
     this.$store.dispatch('fetchEthPrice')
@@ -162,12 +135,6 @@ export default {
     currencyHandler(currency) {
       this.currency = currency
     },
-    indicatorHandler(indicator) {
-      this.indicator = indicator
-    },
-    daysHandler(day) {
-      this.day = day
-    },
     async rangeHandler() {
       this.ui.loading = true
       await this.$store.dispatch('calculateRange', {
@@ -175,7 +142,6 @@ export default {
         percentage: this.percentage,
         buy: this.buy,
         sell: this.sell,
-        indicator: this.indicator.id,
       })
       this.ui.loading = false
       this.show = false
