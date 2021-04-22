@@ -2,6 +2,7 @@ import { getEthPrice, getIndicatorValues } from '../utils'
 
 export const state = () => ({
   ethPrice: 0,
+  dai: 0,
   range: {},
   fetchingPrice: false,
 })
@@ -15,6 +16,9 @@ export const mutations = {
   },
   SET_PRICE_LOADER(state, payload) {
     state.fetchingPrice = payload
+  },
+  SET_DAI_COUNT(state, payload) {
+    state.dai = payload
   },
 }
 
@@ -70,7 +74,6 @@ export const actions = {
         commit('SET_RANGE', { a: ethPrice, b: ratio ** 2 * ethPrice })
       }
     } else {
-      console.log({ days })
       const { min, max } = await dispatch('fetchIndicatorValues', {
         apollo,
         indicator,
@@ -78,6 +81,23 @@ export const actions = {
       })
       commit('SET_RANGE', { a: min, b: max })
     }
+
+    let { ethPrice } = state
+    const {
+      range: { a, b },
+    } = state
+
+    ethPrice = Number(ethPrice)
+
+    const sqEth = Math.sqrt(ethPrice)
+    const sqA = Math.sqrt(a)
+    const d = 1 - Math.sqrt(ethPrice / b)
+
+    console.log({ ethPrice, a, b, sqEth, sqA, d })
+
+    const daiRequired = sqEth * ((sqEth - sqA) / d)
+
+    commit('SET_DAI_COUNT', daiRequired)
   },
 }
 
@@ -87,5 +107,8 @@ export const getters = {
   },
   getRange: (state) => {
     return state.range
+  },
+  getDaiCount: (state) => {
+    return state.dai
   },
 }

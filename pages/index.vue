@@ -97,6 +97,16 @@
         <div class="text-gray-400 text-sm md:w-auto w-full">to</div>
         <span>${{ range.b.toFixed(2) }}</span>
       </div>
+      <div
+        v-if="dai && currency == 'ETH-DAI'"
+        class="text-gray-400 text-sm pt-4"
+      >
+        For every <span class="font-medium text-green-600">1 ETH</span> you need
+        <span class="font-medium text-green-600"
+          >{{ Number(dai).toFixed(2) }}
+          DAI
+        </span>
+      </div>
       <button
         class="text-green-600 text-sm flex items-center space-x-2 focus:outline-none appearance-none pt-8"
         @click="rangeHandler"
@@ -136,7 +146,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ ethPrice: 'getEthPrice', range: 'getRange' }),
+    ...mapGetters({
+      ethPrice: 'getEthPrice',
+      range: 'getRange',
+      dai: 'getDaiCount',
+    }),
     loading() {
       return this.$store.state.fetchingPrice
     },
