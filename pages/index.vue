@@ -40,7 +40,9 @@
             />
             <span v-if="indicator.id === 'pct'">%</span>
           </div>
-          {{ currency == 'DAI' ? 'below' : 'above' }}
+          <span v-if="indicator.id !== 'tgt'">
+            {{ currency == 'DAI' ? 'below' : 'above' }}
+          </span>
           <span
             >the current ETH price
             <span class="text-green-600 font-semibold"> ${{ ethPrice }}</span>
@@ -59,7 +61,7 @@
             />
             <span v-if="indicator.id === 'pct'">%</span>
           </div>
-          below and sell at
+          {{ indicator.id == 'tgt' ? '' : 'below' }} and sell at
           <div
             class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
           >
@@ -73,7 +75,7 @@
           </div>
         </div>
         <div v-if="currency == 'ETH-DAI'" class="p-3 w-full">
-          above the current ETH price
+          {{ indicator.id == 'tgt' ? '' : 'above' }} the current ETH price
           <span class="text-green-600 font-semibold"> ${{ ethPrice }}</span>
         </div>
       </div>
@@ -94,7 +96,7 @@
       v-else-if="range.a && range.b"
       class="flex flex-col items-center justify-center space-y-2"
     >
-      <div class="text-gray-400 text-sm">You can invest between</div>
+      <div class="text-gray-400 text-sm">You can provide liquidity between</div>
       <div
         class="text-4xl lg:text-6xl text-green-600 font-semibold flex flex-wrap items-center justify-center space-y-2 md:space-y-0 md:space-x-4"
       >
@@ -102,10 +104,7 @@
         <div class="text-gray-400 text-sm md:w-auto w-full">to</div>
         <span>${{ range.b.toFixed(2) }}</span>
       </div>
-      <div
-        v-if="dai && currency == 'ETH-DAI'"
-        class="text-gray-400 text-sm pt-4"
-      >
+      <div v-if="dai && currency == 'ETH-DAI'" class="text-gray-400 pt-4">
         For every <span class="font-medium text-green-600">1 ETH</span> you need
         <span class="font-medium text-green-600"
           >{{ Number(dai).toFixed(2) }}
