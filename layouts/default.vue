@@ -7,6 +7,13 @@
   </div>
 </template>
 
+<script>
+import AppHeader from '@/components/global/AppHeader'
+export default {
+  components: [AppHeader],
+}
+</script>
+
 <style>
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
