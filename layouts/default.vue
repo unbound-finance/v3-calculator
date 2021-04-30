@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col min-h-screen">
-    <AppHeader ref="header"></AppHeader>
+    <AppHeader />
     <div class="mb-12 flex-1" el="content">
       <Nuxt />
     </div>
