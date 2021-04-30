@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container min-h-screen flex flex-col space-y-8 items-center justify-center text-center"
+    class="min-h-screen flex flex-col space-y-8 items-center justify-center text-center"
   >
     <div
       v-if="ui.mintLoader"
@@ -182,6 +182,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import IndicatorSelector from '~/components/IndicatorSelector.vue'
+import { formatBigNumber } from '~/utils'
 
 export default {
   components: { IndicatorSelector },
@@ -278,19 +279,18 @@ export default {
             const { args } = events.find(
               ({ event }) => event === 'IncreaseLiquidity'
             )
-            console.log({ args })
+
             this.ui.nftDetails = {
-              amount0: parseInt(args.amount0, 16) / 1e18,
-              amount1: parseInt(args.amount1, 16) / 1e18,
-              liquidity: parseInt(args.liquidity, 16) / 1e18,
-              tokenId: parseInt(args.tokenId, 16),
+              amount0: formatBigNumber(args.amount0),
+              amount1: formatBigNumber(args.amount1),
+              liquidity: formatBigNumber(args.liquidity),
+              tokenId: formatBigNumber(args.tokenId) * 1e18,
             }
           })
         })
-        .catch((e) => {
+        .catch(() => {
           this.ui.loading = false
           this.ui.mintLoader = false
-          alert(e.message)
         })
     },
   },
