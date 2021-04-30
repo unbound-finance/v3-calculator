@@ -1,9 +1,15 @@
 <template>
-  <div>
-    <Nuxt />
+  <div class="flex flex-col min-h-screen">
+    <AppHeader ref="header"></AppHeader>
+    <div class="mb-12 flex-1" el="content">
+      <Nuxt />
+    </div>
   </div>
 </template>
 
+<script>
+export default {}
+</script>
 <style>
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',

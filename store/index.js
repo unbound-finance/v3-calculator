@@ -1,10 +1,13 @@
 import { getEthPrice, getIndicatorValues } from '../utils'
+import UniswapV3Module from './modules/uniswapv3'
 
 export const state = () => ({
   ethPrice: 0,
   dai: 0,
   range: {},
   fetchingPrice: false,
+  config: {},
+  ready: false,
 })
 
 export const mutations = {
@@ -19,6 +22,10 @@ export const mutations = {
   },
   SET_DAI_COUNT(state, payload) {
     state.dai = payload
+  },
+  setConfig(state, config) {
+    state.config = config
+    state.ready = true
   },
 }
 
@@ -111,13 +118,13 @@ export const actions = {
     const sqA = Math.sqrt(a)
     const d = 1 - Math.sqrt(ethPrice / b)
 
-    console.log({ ethPrice, a, b, sqEth, sqA, d })
-
     const daiRequired = sqEth * ((sqEth - sqA) / d)
 
     commit('SET_DAI_COUNT', daiRequired)
   },
 }
+
+export const modules = { UniswapV3Module }
 
 export const getters = {
   getEthPrice: (state) => {

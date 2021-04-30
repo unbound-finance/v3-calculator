@@ -17,6 +17,7 @@
     "@vue-hero-icons/solid": "^1.7.2",
     "axios": "^0.21.1",
     "core-js": "^3.9.1",
+    "ethers": "^5.1.4",
     "math-array": "^1.1.2",
     "ml-array-standard-deviation": "^1.1.6",
     "moving-averages": "^4.0.6",
@@ -35,8 +36,10 @@
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.7.0",
+    "node-sass": "^5.0.0",
     "postcss": "^7",
     "prettier": "^2.2.1",
+    "sass-loader": "^10.1.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }

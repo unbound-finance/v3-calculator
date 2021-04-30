@@ -17,13 +17,23 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      {
+        src:
+          'https://cdn.jsdelivr.net/npm/jdenticon@3.1.0/dist/jdenticon.min.js',
+        async: true,
+        integrity:
+          'sha384-VngWWnG9GS4jDgsGEUNaoRQtfBGiIKZTiXwm9KpgAeaRn6Y/1tAFiyXqSzqC8Ga/',
+        crossorigin: 'anonymous',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['@/assets/css/loading-dots.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['~/plugins/index.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
