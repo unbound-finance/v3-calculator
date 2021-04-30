@@ -1,9 +1,7 @@
 <template>
   <div class="relative z-10 flex items-center">
     <template
-      v-if="
-        $walletProvider.isConnected && String($walletProvider.chainId) === '42'
-      "
+      v-if="$walletProvider.address && String($walletProvider.chainId) === '42'"
     >
       <div
         class="text-[8pt] border text-white rounded-full bg-black absolute px-1 -top-2 -right-4"
@@ -38,11 +36,12 @@ export default {
   @apply rounded;
   @apply outline-none;
   @apply border-none;
-  @apply bg-opacity-10;
+  @apply bg-green-600;
+  @apply text-white;
   @apply flex;
   @apply items-center;
   @apply text-sm;
-  @apply px-3;
+  @apply px-4;
   @apply py-2;
   @apply transition-colors;
 
