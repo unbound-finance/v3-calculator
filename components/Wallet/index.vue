@@ -18,7 +18,9 @@
         :address="$walletProvider.address"
         class="h-6 w-6"
       />
-      <span class="ml-2 max-w-[98px] truncate"
+      <span
+        class="max-w-[98px] truncate"
+        :class="$walletProvider.address ? 'ml-2' : ''"
         >{{ $walletProvider.address || 'connect' }}
       </span>
     </button>
@@ -47,7 +49,7 @@ export default {
 
   &:focus,
   &:hover {
-    @apply bg-opacity-5;
+    @apply bg-green-800;
   }
 }
 </style>
