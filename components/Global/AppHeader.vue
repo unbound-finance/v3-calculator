@@ -11,10 +11,6 @@
   </div>
 </template>
 
-<script>
-export default {}
-</script>
-
 <style lang="scss">
 .header-links {
   @apply border-b-2;

@@ -2,11 +2,11 @@
   <div class="relative z-10 flex items-center">
     <template
       v-if="
-        $walletProvider.isConnected && String($walletProvider.chainId) === '1'
+        $walletProvider.isConnected && String($walletProvider.chainId) === '42'
       "
     >
       <div
-        class="text-[8pt] border text-gray-800 rounded-full bg-border px-2 py-1 absolute -top-4 -right-4"
+        class="text-[8pt] border text-white rounded-full bg-black absolute px-1 -top-2 -right-4"
       >
         TestNet
       </div>
@@ -24,9 +24,6 @@
         >{{ $walletProvider.address || 'connect' }}
       </span>
     </button>
-
-    <!-- <WalletModel ref="walletModel" /> -->
-    <!-- <ProfileMenu v-if="menu" v-model="menu"> </ProfileMenu> -->
   </div>
 </template>
 
