@@ -22,7 +22,7 @@
         width="128"
       />
       <span class="text-gray-700 font-medium text-xl">NFT Minted </span>
-      <span>{{ ui.nftDetails }}</span>
+      <!-- <span>{{ ui.nftDetails }}</span> -->
       <div
         class="text-green-600 cursor-pointer text-sm"
         @click="ui.nftDetails = null"
