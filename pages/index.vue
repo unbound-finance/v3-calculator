@@ -15,14 +15,19 @@
       v-else-if="ui.nftDetails"
       class="flex flex-col flex-wrap -m-3 items-center justify-center animate-zoom space-y-4"
     >
-      <img
-        class="animate-zoom"
-        src="~/assets/icons/success.svg"
-        alt="NFT"
-        width="128"
+      <span class="text-gray-700 font-medium text-xl">NFT Minted</span>
+      <NFTCard
+        v-tilt="{
+          scale: 1.25,
+          glare: true,
+          'glare-prerender': false,
+          'max-glare': 0.8,
+          startX: 45,
+          startY: -45,
+        }"
+        class="animate-zoom shadow-xl"
+        :details="ui.nftDetails"
       />
-      <span class="text-gray-700 font-medium text-xl">NFT Minted </span>
-      <!-- <span>{{ ui.nftDetails }}</span> -->
       <div
         class="text-green-600 cursor-pointer text-sm"
         @click="ui.nftDetails = null"

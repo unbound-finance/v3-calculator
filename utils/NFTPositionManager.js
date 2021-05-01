@@ -78,6 +78,11 @@ class NFTPositionManager {
       deadline,
     ])
   }
+
+  // NFTDescriptor
+  async nftDescription({ tokenId }) {
+    return await this.nft.positions(tokenId)
+  }
 }
 
 export default NFTPositionManager

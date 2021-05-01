@@ -33,7 +33,7 @@ export default {
   css: ['@/assets/css/loading-dots.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/index.js'],
+  plugins: ['~/plugins/index.js', '~/plugins/vueTilt.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -69,6 +69,10 @@ export default {
       default: {
         httpEndpoint:
           'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2',
+      },
+      uniswapV3Client: {
+        httpEndpoint:
+          'https://api.thegraph.com/subgraphs/name/unbound-finance/unbound-v3',
       },
     },
   },

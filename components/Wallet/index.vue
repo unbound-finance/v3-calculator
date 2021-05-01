@@ -1,7 +1,7 @@
 <template>
   <div class="relative z-10 flex items-center">
     <template
-      v-if="$walletProvider.address && String($walletProvider.chainId) === '42'"
+      v-if="$walletProvider.address && String($walletProvider.chainId) != '1'"
     >
       <div
         class="text-[8pt] border text-white rounded-full bg-black absolute px-1 -top-2 -right-4"

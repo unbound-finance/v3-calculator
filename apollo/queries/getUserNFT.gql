@@ -1,0 +1,12 @@
+query($userAddress: String!) {
+  nftTokens(
+    orderBy: tokenId
+    orderDirection: desc
+    where: { userAddress: $userAddress }
+  ) {
+    id
+    userAddress
+    tokenId
+    liquidity
+  }
+}

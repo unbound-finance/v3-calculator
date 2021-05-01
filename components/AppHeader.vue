@@ -5,7 +5,10 @@
         <nuxt-link to="/">
           <span>Unbound</span>
         </nuxt-link>
-        <Wallet />
+        <div class="flex items-center space-x-4">
+          <nuxt-link to="/nft" class="text-sm"> My NFTs </nuxt-link>
+          <Wallet />
+        </div>
       </div>
     </div>
   </div>

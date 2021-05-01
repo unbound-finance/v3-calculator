@@ -9,7 +9,11 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: (theme) => ({
+        'mesh-pattern': "url('~/assets/mesh.png')",
+      }),
+    },
     container: {
       center: true,
       padding: {
