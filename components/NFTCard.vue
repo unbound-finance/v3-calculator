@@ -15,7 +15,12 @@
             >
               Fees
             </div>
-            <span class="text-xs"
+            <div
+              v-if="ui.loading"
+              class="text-sm"
+              :class="{ 'loading-dots': ui.loading }"
+            ></div>
+            <span v-else class="text-xs"
               >{{ nftDescription.fee ? nftDescription.fee / 1e4 : 0 }}%</span
             >
           </div>
@@ -25,7 +30,12 @@
             >
               Min
             </div>
-            <span class="text-xs">{{
+            <div
+              v-if="ui.loading"
+              class="text-sm"
+              :class="{ 'loading-dots': ui.loading }"
+            ></div>
+            <span v-else class="text-xs">{{
               nftDescription.tickLower
                 ? (1.0001 ** nftDescription.tickLower).toFixed(2)
                 : 0
@@ -37,7 +47,12 @@
             >
               Max
             </div>
-            <span class="text-xs">{{
+            <div
+              v-if="ui.loading"
+              class="text-sm"
+              :class="{ 'loading-dots': ui.loading }"
+            ></div>
+            <span v-else class="text-xs">{{
               nftDescription.tickUpper
                 ? (1.0001 ** nftDescription.tickUpper).toFixed(2)
                 : 0
@@ -62,6 +77,9 @@ export default {
   data() {
     return {
       nftDescription: {},
+      ui: {
+        loading: false,
+      },
     }
   },
   mounted() {
@@ -69,9 +87,11 @@ export default {
   },
   methods: {
     async nftDescriptor() {
+      this.ui.loading = true
       const nft = new NFTPositionManager()
       const tokenId = this.details.tokenId
       this.nftDescription = await nft.nftDescription({ tokenId })
+      this.ui.loading = false
     },
   },
 }

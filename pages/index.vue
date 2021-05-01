@@ -68,7 +68,7 @@
         >
           <div v-if="currency !== 'ETH-DAI'" class="p-3 w-full">
             I want to
-            {{ currency == 'DAI' ? 'buy' : 'sell' }}
+            {{ currency == 'ETH' ? 'buy' : 'sell' }}
             <span>ETH at</span>
             <div
               class="mx-2 w-16 md:w-24 border-b-2 border-dotted text-green-600 border-green-500 font-semibold inline-flex items-center justify-between"
@@ -82,7 +82,7 @@
               <span v-if="indicator.id === 'pct'">%</span>
             </div>
             <span v-if="indicator.id !== 'tgt'">
-              {{ currency == 'DAI' ? 'below' : 'above' }}
+              {{ currency == 'ETH' ? 'below' : 'above' }}
             </span>
             <span
               >the current ETH price

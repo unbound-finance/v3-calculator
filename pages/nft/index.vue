@@ -2,7 +2,9 @@
   <div class="container py-5">
     <div class="w-full flex flex-wrap items-center justify-center -m-3">
       <div v-for="nft in nftTokens" :key="nft.id" class="p-3">
-        <NFTCard :details="nft" />
+        <nuxt-link :to="`/nft/${nft.tokenId}`">
+          <NFTCard :details="nft" />
+        </nuxt-link>
       </div>
     </div>
   </div>

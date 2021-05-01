@@ -1,5 +1,9 @@
 import { ethers } from 'ethers'
-import { NFTPositionManagerAddress, NFTPositionManagerABI } from '../constants'
+import {
+  NFTPositionManagerAddress,
+  NFTPositionManagerABI,
+  MaxUint128,
+} from '../constants'
 import ECR20Helper from './ERC20'
 import WalletProvider from './WalletProvider'
 
@@ -77,6 +81,32 @@ class NFTPositionManager {
       userAddress,
       deadline,
     ])
+  }
+
+  // decrease liquidity
+  decreaseLiquidity({ tokenId, liquidity, amount0Min = 0, amount1Min = 0 }) {
+    amount0Min = ethers.utils.parseEther(amount0Min.toString())
+    amount1Min = ethers.utils.parseEther(amount1Min.toString())
+    const deadline = Math.floor(new Date().getTime() / 1000) + 300
+
+    return this.nft.decreaseLiquidity([
+      tokenId,
+      liquidity,
+      amount0Min,
+      amount1Min,
+      deadline,
+    ])
+  }
+
+  // collect
+  collect({ tokenId, amount0 = MaxUint128, amount1 = MaxUint128 }) {
+    const userAddress = this.wallet.address
+    return this.nft.collect([tokenId, userAddress, amount0, amount1])
+  }
+
+  // burn NFT
+  burn({ tokenId }) {
+    return this.nft.burn(tokenId)
   }
 
   // NFTDescriptor
