@@ -64,9 +64,9 @@ export const actions = {
 
       if (currency === 'DAI') {
         // token0
-        target = ethPrice + (ethPrice * percentage) / 100
+        target = ethPrice - (ethPrice * percentage) / 100
         ratio = target / ethPrice
-        commit('SET_RANGE', { b: ratio ** 2 * ethPrice, a: ethPrice })
+        commit('SET_RANGE', { a: ratio ** 2 * ethPrice, b: ethPrice })
       } else if (currency === 'ETH-DAI') {
         const buyTarget = ethPrice - (ethPrice * buy) / 100
         const sellTarget = ethPrice + (ethPrice * sell) / 100
@@ -77,9 +77,9 @@ export const actions = {
           b: sellRatio ** 2 * ethPrice,
         })
       } else {
-        target = ethPrice - (ethPrice * percentage) / 100
+        target = ethPrice + (ethPrice * percentage) / 100
         ratio = target / ethPrice
-        commit('SET_RANGE', { b: ethPrice, a: ratio ** 2 * ethPrice })
+        commit('SET_RANGE', { a: ethPrice, b: ratio ** 2 * ethPrice })
       }
     } else if (indicator === 'tgt') {
       await dispatch('fetchEthPrice')

@@ -23,8 +23,8 @@ class NFTPositionManager {
     fees = 3000,
     tickLower,
     tickUpper,
-    amount0 = 0,
-    amount1 = 0,
+    amount0 = 1,
+    amount1 = 1,
     minAmount0 = 0,
     minAmount1 = 0,
   }) {

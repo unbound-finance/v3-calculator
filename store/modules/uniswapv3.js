@@ -41,8 +41,8 @@ export default {
         token1,
         tickLower: state.ticks.lowTick,
         tickUpper: state.ticks.highTick,
-        amount0: selectedToken === 'DAI' ? amount : 0,
-        amount1: selectedToken === 'ETH' ? amount : 0,
+        amount0: selectedToken === 'DAI' ? amount : 1,
+        amount1: selectedToken === 'ETH' ? amount : 1,
       })
     },
   },
