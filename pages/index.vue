@@ -49,7 +49,7 @@
         class="text-gray-700 font-medium text-base lg:text-2xl flex flex-wrap -m-3 items-center justify-center"
       >
         <div class="p-3 w-full flex justify-center items-center space-x-2">
-          <span> I want to provide single-side liquidity of</span>
+          <span> I want to provide</span>
           <div class="flex">
             <input
               ref="amountInputField"
