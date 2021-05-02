@@ -220,7 +220,7 @@ export default {
         { id: 'bbands', name: 'Bollinger Bands' },
         { id: 'minmax', name: 'Min Max' },
       ],
-      currency: null,
+      currency: 'ETH',
       day: 7,
       indicator: { id: 'pct', name: 'Percentage' },
       percentage: 10,
