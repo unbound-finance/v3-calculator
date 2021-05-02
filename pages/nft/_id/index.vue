@@ -92,13 +92,14 @@ export default {
 
       this.ui.message = 'removing your liquidity'
 
-      const runBurn = (tokenId) => {
+      const runBurn = async (tokenId) => {
         this.ui.message = 'burning your token 🔥'
-        return nft
+        await nft
           .burn({ tokenId })
           .then(({ wait }) =>
             wait(1).then(() => {
               this.ui.message = 'NFT burned!'
+              this.$router.push('/nft')
             })
           )
           .catch((e) => {
@@ -118,9 +119,11 @@ export default {
         await nft.decreaseLiquidity({ tokenId, liquidity }).then(({ wait }) =>
           wait(1).then(() => {
             this.ui.message = 'collecting fees 💸'
-            return nft
-              .collect({ tokenId })
-              .then(({ wait }) => wait(1).then(() => runBurn()))
+            return nft.collect({ tokenId }).then(({ wait }) =>
+              wait(1).then(() => {
+                return runBurn(tokenId)
+              })
+            )
           })
         )
       }

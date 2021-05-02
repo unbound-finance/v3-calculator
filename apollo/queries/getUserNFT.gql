@@ -2,7 +2,7 @@ query($userAddress: String!) {
   nftTokens(
     orderBy: tokenId
     orderDirection: desc
-    where: { userAddress: $userAddress }
+    where: { userAddress: $userAddress, isBurned: false }
   ) {
     id
     userAddress

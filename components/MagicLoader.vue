@@ -9,13 +9,25 @@
         fill="none"
         stroke-width="4"
         stroke-miterlimit="10"
+        :stroke="color"
       />
     </svg>
   </div>
 </template>
 
+<script>
+export default {
+  props: {
+    color: {
+      type: String,
+      default: '#ef4444',
+    },
+  },
+}
+</script>
+
 <style lang="scss" scoped>
-$red: #ef4444;
+// $red: #ef4444;
 
 $width: 18px;
 
@@ -71,10 +83,10 @@ $width: 18px;
   }
 }
 
-@keyframes color {
-  100%,
-  0% {
-    stroke: $red;
-  }
-}
+// @keyframes color {
+//   100%,
+//   0% {
+//     stroke: $red;
+//   }
+// }
 </style>

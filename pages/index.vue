@@ -18,7 +18,7 @@
       <span class="text-gray-700 font-medium text-xl">NFT Minted</span>
       <NFTCard
         v-tilt="{
-          scale: 1.25,
+          scale: 1.1,
           glare: true,
           'glare-prerender': false,
           'max-glare': 0.8,
@@ -28,24 +28,43 @@
         class="animate-zoom shadow-xl"
         :details="ui.nftDetails"
       />
-      <div
-        class="text-green-600 cursor-pointer text-sm"
-        @click="ui.nftDetails = null"
-      >
-        Go Back
+      <div class="flex items-center justify-center space-x-4">
+        <div
+          class="text-green-600 cursor-pointer text-sm"
+          @click="ui.nftDetails = null"
+        >
+          Go Back
+        </div>
+        <nuxt-link :to="`/nft/${ui.nftDetails.tokenId}`">
+          <button
+            class="px-4 py-1 text-sm bg-green-600 hover:bg-green-700 transition-colors text-white rounded appearance-none focus:outline-none"
+          >
+            View NFT
+          </button>
+        </nuxt-link>
       </div>
     </div>
     <div v-else>
       <div
         class="text-gray-700 font-medium text-base lg:text-2xl flex flex-wrap -m-3 items-center justify-center"
       >
-        <div class="p-3 w-full">
-          <span>I want to provide single-side liquidity in</span>
-          <CurrencySelector
-            class="px-2"
-            :options="currencies"
-            @selected="currencyHandler"
-          />
+        <div class="p-3 w-full flex justify-center items-center space-x-2">
+          <span> I want to provide single-side liquidity of</span>
+          <div class="flex">
+            <input
+              ref="amountInputField"
+              v-model.number="amount"
+              type="number"
+              class="font-medium text-[16pt] font-mono border-b border-dotted border-green-500 p-2 rounded focus:outline-none"
+              :style="{ width: reactiveWidth + 'px' }"
+              placeholder="Enter Amount"
+            />
+            <CurrencySelector
+              class="px-2"
+              :options="currencies"
+              @selected="currencyHandler"
+            />
+          </div>
         </div>
         <div class="p-3 w-full">
           <span>Calculate my range by</span>
@@ -208,6 +227,7 @@ export default {
       show: true,
       buy: 0,
       sell: 0,
+      amount: 1,
       ui: {
         loading: false,
         minted: false,
@@ -225,6 +245,9 @@ export default {
     loading() {
       return this.$store.state.fetchingPrice
     },
+    reactiveWidth() {
+      return (this.amount.toString().length + 1) * 16
+    },
   },
   watch: {
     percentage() {
@@ -241,6 +264,7 @@ export default {
     },
   },
   mounted() {
+    this.$refs.amountInputField.focus()
     this.$store.dispatch('fetchEthPrice')
   },
   methods: {
@@ -273,7 +297,7 @@ export default {
     mintHandler() {
       this.ui.loading = true
       this.$store
-        .dispatch('mint', {})
+        .dispatch('mint', { selectedToken: this.currency, amount: this.amount })
         .then(({ wait }) => {
           this.ui.loading = false
           // show loader
