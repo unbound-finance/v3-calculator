@@ -25,7 +25,11 @@
         >
         <span class="font-mono text-sm text-gray-800"
           >Liquidity:
-          {{ nftDescription.liquidity ? nftDescription.liquidity : 0 }}</span
+          {{
+            nftDescription.liquidity
+              ? Number(nftDescription.liquidity) / 1e18
+              : 0
+          }}</span
         >
       </div>
       <div>

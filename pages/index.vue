@@ -313,7 +313,7 @@ export default {
               amount0: formatBigNumber(args.amount0),
               amount1: formatBigNumber(args.amount1),
               liquidity: formatBigNumber(args.liquidity),
-              tokenId: formatBigNumber(args.tokenId),
+              tokenId: parseInt(args.tokenId, 16),
             }
           })
         })
