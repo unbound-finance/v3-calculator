@@ -114,16 +114,23 @@ export default {
         !Number(formatBigNumber(tokensOwed1))
       ) {
         await runBurn(tokenId)
+      } else if (
+        (Number(formatBigNumber(tokensOwed0)) ||
+          Number(formatBigNumber(tokensOwed1))) &&
+        !Number(formatBigNumber(liquidity))
+      ) {
+        this.ui.message = 'collecting fees 💸'
+        await nft
+          .collect({ tokenId })
+          .then(({ wait }) => wait(1).then(() => runBurn(tokenId)))
       } else {
         // decrease liquidity
         await nft.decreaseLiquidity({ tokenId, liquidity }).then(({ wait }) =>
           wait(1).then(() => {
             this.ui.message = 'collecting fees 💸'
-            return nft.collect({ tokenId }).then(({ wait }) =>
-              wait(1).then(() => {
-                return runBurn(tokenId)
-              })
-            )
+            return nft
+              .collect({ tokenId })
+              .then(({ wait }) => wait(1).then(() => runBurn(tokenId)))
           })
         )
       }
