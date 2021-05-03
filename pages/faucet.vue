@@ -50,11 +50,13 @@
           <button
             type="button"
             class="w-full font-medium rounded-lg py-4 appearance-none focus:outline-none"
-            :title="
-              ui.showRequestEth == false ? 'You already have kovan ETH' : ''
+            :title="!ui.showRequestEth ? 'You already have kovan ETH' : ''"
+            :class="
+              ui.showRequestEth
+                ? 'bg-gradient-to-r from-green-700 to-green-600 text-white'
+                : 'bg-gray-300 text-gray-800 cursor-not-allowed'
             "
-            :class="ui.showRequestEth ? getActiveClass : getDisabledClass"
-            :disabled="ui.showRequestEth == false"
+            :disabled="!ui.showRequestEth"
             @click="requestKeth"
           >
             <div
