@@ -49,6 +49,7 @@ export const actions = {
     {
       currency,
       percentage,
+      tgtPrice,
       buy = 0,
       sell = 0,
       indicator = 'pct',
@@ -56,49 +57,16 @@ export const actions = {
       days = 7,
     }
   ) {
-    if (indicator === 'pct') {
-      await dispatch('fetchEthPrice')
-      const ethPrice = Number(state.ethPrice)
-      let target
-      let ratio
-
-      if (currency === 'DAI') {
-        // token0
-        target = ethPrice - (ethPrice * percentage) / 100
-        ratio = target / ethPrice
-        commit('SET_RANGE', { a: ratio ** 2 * ethPrice, b: ethPrice })
-      } else if (currency === 'ETH-DAI') {
-        const buyTarget = ethPrice - (ethPrice * buy) / 100
-        const sellTarget = ethPrice + (ethPrice * sell) / 100
-        const buyRatio = buyTarget / ethPrice
-        const sellRatio = sellTarget / ethPrice
-        commit('SET_RANGE', {
-          a: buyRatio ** 2 * ethPrice,
-          b: sellRatio ** 2 * ethPrice,
-        })
-      } else {
-        target = ethPrice + (ethPrice * percentage) / 100
-        ratio = target / ethPrice
-        commit('SET_RANGE', { a: ethPrice, b: ratio ** 2 * ethPrice })
-      }
-    } else if (indicator === 'tgt') {
-      await dispatch('fetchEthPrice')
-      const ethPrice = Number(state.ethPrice)
-      let ratio
-      if (currency === 'DAI') {
-        ratio = percentage / ethPrice
-        commit('SET_RANGE', { a: ratio ** 2 * ethPrice, b: ethPrice })
-      } else if (currency === 'ETH-DAI') {
-        const buyRatio = buy / ethPrice
-        const sellRatio = sell / ethPrice
-        commit('SET_RANGE', {
-          a: buyRatio ** 2 * ethPrice,
-          b: sellRatio ** 2 * ethPrice,
-        })
-      } else {
-        ratio = percentage / ethPrice
-        commit('SET_RANGE', { a: ethPrice, b: ratio ** 2 * ethPrice })
-      }
+    await dispatch('fetchEthPrice')
+    let ethPrice = Number(state.ethPrice)
+    if (indicator === 'pct' || indicator === 'tgt') {
+      const {
+        data: { a, b },
+      } = await this.$axios.post(
+        'https://strategy-serverless.vercel.app/api/calculateRange',
+        { currency, percentage, tgtPrice, buy, sell, indicator, ethPrice }
+      )
+      commit('SET_RANGE', { a, b })
     } else {
       const { min, max } = await dispatch('fetchIndicatorValues', {
         apollo,
@@ -108,7 +76,6 @@ export const actions = {
       commit('SET_RANGE', { a: min, b: max })
     }
 
-    let { ethPrice } = state
     const {
       range: { a, b },
     } = state
