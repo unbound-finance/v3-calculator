@@ -7,14 +7,37 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'v3-calculator',
-    htmlAttrs: {
-      lang: 'en',
-    },
+    title: 'Unbound App Interface',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'title',
+        name: 'title',
+        content: 'Unbound Finance',
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'The DeFi Treasury For Liquidity Pool Tokens',
+      },
+      {
+        hid: 'apple-mobile-web-app-title',
+        name: 'apple-mobile-web-app-title',
+        content: 'Unbound Finance',
+      },
+      {
+        hid: 'og:title',
+        name: 'og:title',
+        property: 'og:title',
+        content: 'Unbound Finance',
+      },
+      {
+        hid: 'og:site_name',
+        name: 'og:site_name',
+        property: 'og:site_name',
+        content: 'Unbound Finance',
+      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
