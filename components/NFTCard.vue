@@ -58,6 +58,36 @@
                 : 0
             }}</span>
           </div>
+          <div class="flex space-x-2">
+            <div
+              class="bg-white bg-opacity-75 rounded text-gray-800 font-mono text-xs px-2"
+            >
+              ETH
+            </div>
+            <div
+              v-if="ui.loading"
+              class="text-sm"
+              :class="{ 'loading-dots': ui.loading }"
+            ></div>
+            <span v-else class="text-xs">{{
+              nftToken ? (Number(nftToken.amount1) / 1e18).toFixed(4) : 0
+            }}</span>
+          </div>
+          <div class="flex space-x-2">
+            <div
+              class="bg-white bg-opacity-75 rounded text-gray-800 font-mono text-xs px-2"
+            >
+              DAI
+            </div>
+            <div
+              v-if="ui.loading"
+              class="text-sm"
+              :class="{ 'loading-dots': ui.loading }"
+            ></div>
+            <span v-else class="text-xs">{{
+              nftToken ? (Number(nftToken.amount0) / 1e18).toFixed(4) : 0
+            }}</span>
+          </div>
         </div>
         <img src="~/assets/unbound.svg" alt="unbound" width="24" />
       </div>
@@ -67,11 +97,25 @@
 
 <script>
 import NFTPositionManager from '~/utils/NFTPositionManager'
+import getNFTDetailsQuery from '~/apollo/queries/getNFTDetails'
+
 export default {
   props: {
     details: {
       type: Object,
       required: true,
+    },
+  },
+  apollo: {
+    $client: 'uniswapV3Client',
+    nftToken: {
+      prefetch: true,
+      query: getNFTDetailsQuery,
+      variables() {
+        return {
+          id: '0x' + Number(this.details.tokenId).toString(16),
+        }
+      },
     },
   },
   data() {

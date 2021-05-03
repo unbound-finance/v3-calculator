@@ -14,6 +14,25 @@
             This faucet will give you our test ETH and DAI tokens on kovan
             testnet.
           </li>
+          <br />
+          <li>
+            ETH Address:
+            <a
+              href="https://kovan.etherscan.io/token/0xeee3c7c2873d1bc87a6a6374827c0b75ead656ee"
+              class="text-green-600"
+              target="_blank"
+              >0xeee3c7c2873d1bc87a6a6374827c0b75ead656ee</a
+            >
+          </li>
+          <li>
+            DAI Address:
+            <a
+              href="https://kovan.etherscan.io/token/0x88254521B0706D59C407B1578576D91dfE2E86Db"
+              class="text-green-600"
+              target="_blank"
+              >0x88254521B0706D59C407B1578576D91dfE2E86Db</a
+            >
+          </li>
 
           <!-- <li>
             These are ETH, DAI, . You can find token addresses

@@ -55,7 +55,7 @@
               ref="amountInputField"
               v-model.number="amount"
               type="number"
-              class="font-medium text-[16pt] font-mono border-b border-dotted border-green-500 p-2 rounded focus:outline-none"
+              class="font-medium text-[16pt] min-w-[80px] font-mono border-b border-green-500 p-2 rounded focus:outline-none"
               :style="{ width: reactiveWidth + 'px' }"
               placeholder="Enter Amount"
             />
@@ -212,7 +212,7 @@ export default {
   components: { IndicatorSelector },
   data() {
     return {
-      currencies: ['ETH', 'DAI'],
+      currencies: ['ETH'],
       days: [7, 15, 30],
       indicators: [
         { id: 'pct', name: 'Percentage' },
