@@ -62,7 +62,7 @@
             <div
               v-if="ui.ethLoading"
               class="text-lg"
-              :class="{ 'loading-dots': ui.loading }"
+              :class="{ 'loading-dots': ui.ethLoading }"
             ></div>
             <span v-else>Request KETH</span>
           </button>
