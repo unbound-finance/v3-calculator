@@ -1,0 +1,10 @@
+query($id: String!) {
+  nftToken(id: $id) {
+    id
+    userAddress
+    tokenId
+    liquidity
+    amount0
+    amount1
+  }
+}

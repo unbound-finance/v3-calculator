@@ -31,6 +31,18 @@
               : 0
           }}</span
         >
+        <span class="font-mono text-sm text-gray-800"
+          >ETH:
+          {{
+            nftToken ? (Number(nftToken.amount1) / 1e18).toFixed(4) : 0
+          }}</span
+        >
+        <span class="font-mono text-sm text-gray-800"
+          >DAI:
+          {{
+            nftToken ? (Number(nftToken.amount0) / 1e18).toFixed(4) : 0
+          }}</span
+        >
       </div>
       <div>
         <div v-if="ui.burnLoader" class="flex space-x-2 items-center">
@@ -60,8 +72,21 @@
 <script>
 import NFTPositionManager from '~/utils/NFTPositionManager'
 import { formatBigNumber } from '~/utils'
+import getNFTDetailsQuery from '~/apollo/queries/getNFTDetails'
 
 export default {
+  apollo: {
+    $client: 'uniswapV3Client',
+    nftToken: {
+      prefetch: true,
+      query: getNFTDetailsQuery,
+      variables() {
+        return {
+          id: '0x' + Number(this.$router.currentRoute.params.id).toString(16),
+        }
+      },
+    },
+  },
   data() {
     return {
       nftDescription: {},
