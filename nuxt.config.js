@@ -17,11 +17,6 @@ export default {
         content: 'Unbound Finance',
       },
       {
-        hid: 'description',
-        name: 'description',
-        content: 'The DeFi Treasury For Liquidity Pool Tokens',
-      },
-      {
         hid: 'apple-mobile-web-app-title',
         name: 'apple-mobile-web-app-title',
         content: 'Unbound Finance',
