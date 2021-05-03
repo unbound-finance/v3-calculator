@@ -55,7 +55,7 @@
               ref="amountInputField"
               v-model.number="amount"
               type="number"
-              class="font-medium text-[16pt] min-w-[80px] font-mono border-b border-green-500 p-2 rounded focus:outline-none"
+              class="font-medium text-[16pt] min-w-[80px] font-mono border-b border-green-500 px-2 rounded focus:outline-none"
               :style="{ width: reactiveWidth + 'px' }"
               placeholder="Enter Amount"
             />
@@ -94,7 +94,14 @@
             >
               <span v-if="indicator.id === 'tgt'">$</span>
               <input
+                v-if="indicator.id === 'pct'"
                 v-model="percentage"
+                class="w-auto min-w-0 focus:outline-none font-semibold"
+                type="number"
+              />
+              <input
+                v-if="indicator.id === 'tgt'"
+                v-model="tgtPrice"
                 class="w-auto min-w-0 focus:outline-none font-semibold"
                 type="number"
               />
@@ -156,6 +163,9 @@
         ></div>
         <span v-else> Calculate Range</span>
       </button>
+      <div v-if="!isValidAmount" class="text-red-500 py-2 text-sm">
+        Enter amount which is above {{ Number(ethPrice).toFixed(2) }}
+      </div>
       <div
         v-else-if="range.a && range.b"
         class="flex flex-col items-center justify-center space-y-2 mt-8"
@@ -187,7 +197,7 @@
             <ReloadIcon :class="{ 'spin-reverse': loading }" />
           </button>
           <button
-            class="text-white bg-green-600 text-sm focus:outline-none appearance-none rounded py-1 px-4"
+            class="text-sm text-white bg-green-600 focus:outline-none appearance-none rounded py-1 px-4"
             @click="mintHandler"
           >
             <div
@@ -224,6 +234,7 @@ export default {
       day: 7,
       indicator: { id: 'pct', name: 'Percentage' },
       percentage: 10,
+      tgtPrice: 3000,
       show: true,
       buy: 0,
       sell: 0,
@@ -248,6 +259,12 @@ export default {
     reactiveWidth() {
       return (this.amount.toString().length + 1) * 16
     },
+    isValidAmount() {
+      if (this.currency === 'ETH' && this.tgtPrice >= this.ethPrice) {
+        return true
+      }
+      return false
+    },
   },
   watch: {
     percentage() {
@@ -258,6 +275,7 @@ export default {
     },
     indicator: {
       handler() {
+        this.$store.commit('SET_RANGE', {})
         this.show = true
       },
       deep: true,
@@ -285,6 +303,7 @@ export default {
       await this.$store.dispatch('calculateRange', {
         currency: this.currency,
         percentage: this.percentage,
+        tgtPrice: this.tgtPrice,
         buy: this.buy,
         sell: this.sell,
         indicator: this.indicator.id,
