@@ -51,32 +51,8 @@
         <div class="p-3 w-full flex justify-center items-center space-x-2">
           <span>I want to provide </span>
           <div class="flex space-x-2">
-            <div v-if="currency == 'ETH-DAI'" class="flex space-x-2">
-              <div class="flex">
-                <input
-                  ref="amountInputField"
-                  v-model.number="amountA"
-                  type="number"
-                  class="font-medium text-[16pt] min-w-[80px] font-mono border-b border-green-500 px-2 rounded focus:outline-none"
-                  :style="{ width: reactiveWidth + 'px' }"
-                  placeholder="Enter Amount"
-                />
-                <span class="font-medium text-green-600">ETH</span>
-              </div>
-              <div class="flex">
-                <input
-                  ref="amountInputField"
-                  v-model.number="amountB"
-                  type="number"
-                  class="font-medium text-[16pt] min-w-[80px] font-mono border-b border-green-500 px-2 rounded focus:outline-none"
-                  :style="{ width: reactiveWidth + 'px' }"
-                  placeholder="Enter Amount"
-                />
-                <span class="font-medium text-green-600">DAI</span>
-              </div>
-            </div>
             <input
-              v-else-if="currency == 'ETH'"
+              v-if="currency == 'ETH'"
               ref="amountInputField"
               v-model.number="amountA"
               type="number"
@@ -218,13 +194,42 @@
           <div class="text-gray-400 text-sm md:w-auto w-full">to</div>
           <span>${{ range.b.toFixed(2) }}</span>
         </div>
-        <div v-if="dai && currency == 'ETH-DAI'" class="text-gray-400 pt-4">
-          For every <span class="font-medium text-green-600">1 ETH</span> you
-          need
-          <span class="font-medium text-green-600"
-            >{{ Number(dai).toFixed(2) }}
-            DAI
-          </span>
+        <div
+          v-if="dai && currency == 'ETH-DAI'"
+          class="pt-4 flex flex-col items-center space-y-2"
+        >
+          <div class="text-gray-400">
+            For every <span class="font-medium text-green-600">1 ETH</span> you
+            need
+            <span class="font-medium text-green-600"
+              >{{ Number(dai).toFixed(2) }}
+              DAI
+            </span>
+          </div>
+          <div v-if="currency == 'ETH-DAI'" class="flex space-x-2">
+            <div class="flex">
+              <input
+                ref="amountInputField"
+                v-model.number="ethAmount"
+                type="number"
+                class="font-medium text-[16pt] min-w-[80px] font-mono border-b border-green-500 px-2 rounded focus:outline-none"
+                :style="{ width: reactiveWidth + 'px' }"
+                placeholder="Enter Amount"
+              />
+              <span class="font-medium text-green-600">ETH</span>
+            </div>
+            <div class="flex">
+              <input
+                ref="amountInputField"
+                v-model.number="daiAmount"
+                type="number"
+                class="font-medium text-[16pt] min-w-[80px] font-mono border-b border-green-500 px-2 rounded focus:outline-none"
+                :style="{ width: reactiveWidth + 'px' }"
+                placeholder="Enter Amount"
+              />
+              <span class="font-medium text-green-600">DAI</span>
+            </div>
+          </div>
         </div>
         <div class="flex items-center space-x-4 py-8">
           <button
@@ -279,6 +284,7 @@ export default {
       amount: 1,
       amountA: 0,
       amountB: 0,
+      ethAmount: 0,
       ui: {
         loading: false,
         minted: false,
@@ -306,6 +312,14 @@ export default {
         return true
       }
       return false
+    },
+    daiAmount: {
+      get() {
+        return this.ethAmount * this.dai
+      },
+      set(a) {
+        this.ethAmount = a / this.dai
+      },
     },
   },
   watch: {
@@ -358,7 +372,10 @@ export default {
     mintHandler() {
       this.ui.loading = true
       this.$store
-        .dispatch('mint', { amount0: this.amountA, amount1: this.amountB })
+        .dispatch('mint', {
+          amount0: this.currency === 'ETH-DAI' ? this.ethAmount : this.amountA,
+          amount1: this.currency === 'ETH-DAI' ? this.daiAmount : this.amountB,
+        })
         .then(({ wait }) => {
           this.ui.loading = false
           // show loader
