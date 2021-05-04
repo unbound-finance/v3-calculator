@@ -70,7 +70,7 @@
               :class="{ 'loading-dots': ui.loading }"
             ></div>
             <span v-else class="text-xs">{{
-              nftToken ? (Number(nftToken.amount1) / 1e18).toFixed(4) : 0
+              nftToken ? (Number(nftToken.amount0) / 1e18).toFixed(4) : 0
             }}</span>
           </div>
           <div class="flex space-x-2">
@@ -85,7 +85,7 @@
               :class="{ 'loading-dots': ui.loading }"
             ></div>
             <span v-else class="text-xs">{{
-              nftToken ? (Number(nftToken.amount0) / 1e18).toFixed(4) : 0
+              nftToken ? (Number(nftToken.amount1) / 1e18).toFixed(4) : 0
             }}</span>
           </div>
         </div>

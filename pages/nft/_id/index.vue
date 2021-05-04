@@ -34,13 +34,13 @@
         <span class="font-mono text-sm text-gray-800"
           >ETH:
           {{
-            nftToken ? (Number(nftToken.amount1) / 1e18).toFixed(4) : 0
+            nftToken ? (Number(nftToken.amount0) / 1e18).toFixed(4) : 0
           }}</span
         >
         <span class="font-mono text-sm text-gray-800"
           >DAI:
           {{
-            nftToken ? (Number(nftToken.amount0) / 1e18).toFixed(4) : 0
+            nftToken ? (Number(nftToken.amount1) / 1e18).toFixed(4) : 0
           }}</span
         >
       </div>

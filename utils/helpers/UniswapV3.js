@@ -24,7 +24,7 @@ export function getTickRange({ low, high, tickSpacing = 60 }) {
   const highTick = log1001 * Math.log10(Math.sqrt(high))
 
   return {
-    lowTick: Math.ceil(lowTick / tickSpacing) * tickSpacing - tickSpacing,
-    highTick: Math.floor(highTick / tickSpacing) * tickSpacing + tickSpacing,
+    lowTick: Math.ceil(lowTick / tickSpacing) * tickSpacing,
+    highTick: Math.floor(highTick / tickSpacing) * tickSpacing,
   }
 }

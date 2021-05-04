@@ -164,7 +164,8 @@
         <span v-else> Calculate Range</span>
       </button>
       <div v-if="!isValidAmount" class="text-red-500 py-2 text-sm">
-        Enter amount which is above {{ Number(ethPrice).toFixed(2) }}
+        Enter amount which is {{ currency == 'ETH' ? 'above' : 'below' }}
+        {{ Number(ethPrice).toFixed(2) }}
       </div>
       <div
         v-else-if="range.a && range.b"
@@ -222,7 +223,7 @@ export default {
   components: { IndicatorSelector },
   data() {
     return {
-      currencies: ['ETH'],
+      currencies: ['ETH', 'DAI', 'ETH-DAI'],
       days: [7, 15, 30],
       indicators: [
         { id: 'pct', name: 'Percentage' },
@@ -261,6 +262,8 @@ export default {
     },
     isValidAmount() {
       if (this.currency === 'ETH' && this.tgtPrice >= this.ethPrice) {
+        return true
+      } else if (this.currency === 'DAI' && this.tgtPrice <= this.ethPrice) {
         return true
       }
       return false
