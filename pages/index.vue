@@ -49,11 +49,45 @@
         class="text-gray-700 font-medium text-base lg:text-2xl flex flex-wrap -m-3 items-center justify-center"
       >
         <div class="p-3 w-full flex justify-center items-center space-x-2">
-          <span> I want to provide</span>
-          <div class="flex">
+          <span>I want to provide </span>
+          <div class="flex space-x-2">
+            <div v-if="currency == 'ETH-DAI'" class="flex space-x-2">
+              <div class="flex">
+                <input
+                  ref="amountInputField"
+                  v-model.number="amountA"
+                  type="number"
+                  class="font-medium text-[16pt] min-w-[80px] font-mono border-b border-green-500 px-2 rounded focus:outline-none"
+                  :style="{ width: reactiveWidth + 'px' }"
+                  placeholder="Enter Amount"
+                />
+                <span class="font-medium text-green-600">ETH</span>
+              </div>
+              <div class="flex">
+                <input
+                  ref="amountInputField"
+                  v-model.number="amountB"
+                  type="number"
+                  class="font-medium text-[16pt] min-w-[80px] font-mono border-b border-green-500 px-2 rounded focus:outline-none"
+                  :style="{ width: reactiveWidth + 'px' }"
+                  placeholder="Enter Amount"
+                />
+                <span class="font-medium text-green-600">DAI</span>
+              </div>
+            </div>
             <input
+              v-else-if="currency == 'ETH'"
               ref="amountInputField"
-              v-model.number="amount"
+              v-model.number="amountA"
+              type="number"
+              class="font-medium text-[16pt] min-w-[80px] font-mono border-b border-green-500 px-2 rounded focus:outline-none"
+              :style="{ width: reactiveWidth + 'px' }"
+              placeholder="Enter Amount"
+            />
+            <input
+              v-else-if="currency == 'DAI'"
+              ref="amountInputField"
+              v-model.number="amountB"
               type="number"
               class="font-medium text-[16pt] min-w-[80px] font-mono border-b border-green-500 px-2 rounded focus:outline-none"
               :style="{ width: reactiveWidth + 'px' }"
@@ -163,12 +197,15 @@
         ></div>
         <span v-else> Calculate Range</span>
       </button>
-      <div v-if="!isValidAmount" class="text-red-500 py-2 text-sm">
+      <div
+        v-if="!isValidAmount && indicator.id == 'tgt' && currency != 'ETH-DAI'"
+        class="text-red-500 py-2 text-sm"
+      >
         Enter amount which is {{ currency == 'ETH' ? 'above' : 'below' }}
         {{ Number(ethPrice).toFixed(2) }}
       </div>
       <div
-        v-else-if="range && (range.a || range.b)"
+        v-else-if="range"
         class="flex flex-col items-center justify-center space-y-2 mt-8"
       >
         <div class="text-gray-400 text-sm">
@@ -240,6 +277,8 @@ export default {
       buy: 0,
       sell: 0,
       amount: 1,
+      amountA: 0,
+      amountB: 0,
       ui: {
         loading: false,
         minted: false,
@@ -278,7 +317,7 @@ export default {
     },
     indicator: {
       handler() {
-        this.$store.commit('SET_RANGE', {})
+        this.$store.commit('SET_RANGE', null)
         this.show = true
       },
       deep: true,
@@ -319,7 +358,7 @@ export default {
     mintHandler() {
       this.ui.loading = true
       this.$store
-        .dispatch('mint', { selectedToken: this.currency, amount: this.amount })
+        .dispatch('mint', { amount0: this.amountA, amount1: this.amountB })
         .then(({ wait }) => {
           this.ui.loading = false
           // show loader

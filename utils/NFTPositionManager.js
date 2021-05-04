@@ -47,15 +47,19 @@ class NFTPositionManager {
       await this.ERC20.approve(token1, NFTPositionManagerAddress)
     }
     // convert amounts to BigNumber
-    amount0 = ethers.utils.parseEther(amount0.toString())
-    amount1 = ethers.utils.parseEther(amount1.toString())
+    amount0 = !amount0
+      ? ethers.utils.parseEther('1')
+      : ethers.utils.parseEther(amount0.toString())
+    amount1 = !amount1
+      ? ethers.utils.parseEther('1')
+      : ethers.utils.parseEther(amount1.toString())
     // set deadline and userAddress
     const deadline = Math.floor(new Date().getTime() / 1000) + 300
     const userAddress = this.wallet.address
 
     console.log({
-      token1, // dai
       token0, // weth
+      token1, // dai
       fees,
       tickLower,
       tickUpper,
@@ -69,8 +73,8 @@ class NFTPositionManager {
 
     // emit mint transaction to network
     return this.nft.mint([
-      token1, // dai
       token0, // weth
+      token1, // dai
       fees,
       tickLower,
       tickUpper,

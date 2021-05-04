@@ -4,7 +4,7 @@ import UniswapV3Module from './modules/uniswapv3'
 export const state = () => ({
   ethPrice: 0,
   dai: 0,
-  range: {},
+  range: null,
   fetchingPrice: false,
   config: {},
   ready: false,

@@ -24,12 +24,7 @@ export default {
     // mint
     mint(
       { state, dispatch },
-      {
-        token0 = daiAddress,
-        token1 = wethAddress,
-        selectedToken = 'ETH',
-        amount = 1,
-      }
+      { token0 = wethAddress, token1 = daiAddress, amount0, amount1 }
     ) {
       // get tickRange
       dispatch('tickRange')
@@ -41,8 +36,8 @@ export default {
         token1,
         tickLower: state.ticks.lowTick,
         tickUpper: state.ticks.highTick,
-        amount0: selectedToken === 'DAI' ? amount : 1,
-        amount1: selectedToken === 'ETH' ? amount : 1,
+        amount0,
+        amount1,
       })
     },
   },
