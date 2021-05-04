@@ -168,7 +168,7 @@
         {{ Number(ethPrice).toFixed(2) }}
       </div>
       <div
-        v-else-if="range.a && range.b"
+        v-else-if="range && (range.a || range.b)"
         class="flex flex-col items-center justify-center space-y-2 mt-8"
       >
         <div class="text-gray-400 text-sm">
