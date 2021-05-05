@@ -9,7 +9,7 @@
           </div>
         </nuxt-link>
         <div class="flex items-center space-x-4">
-          <nuxt-link to="/faucet" class="text-sm">Faucet</nuxt-link>
+          <!-- <nuxt-link to="/faucet" class="text-sm">Faucet</nuxt-link> -->
           <nuxt-link to="/nft" class="text-sm"> My NFTs </nuxt-link>
           <Wallet />
         </div>

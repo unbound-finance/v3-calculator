@@ -24,7 +24,7 @@ export default {
     // mint
     mint(
       { state, dispatch },
-      { token0 = wethAddress, token1 = daiAddress, amount0, amount1 }
+      { token0 = daiAddress, token1 = wethAddress, amount0, amount1 }
     ) {
       // get tickRange
       dispatch('tickRange')

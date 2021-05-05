@@ -5,11 +5,11 @@ const UniswapV3PoolABI = require('./abis/UniswapV3Pool.json')
 const FaucetABI = require('./abis/Faucet.json')
 
 export const NFTPositionManagerAddress =
-  '0x815BCC87613315327E04e4A3b7c96a79Ae80760c'
+  '0xc2e9f25be6257c210d7adf0d4cd6e3e881ba25f8'
 
-export const daiAddress = '0xF821ddD9068B75F0d906f066590c646085B9fF3a'
-export const wethAddress = '0xf35acA6667C80705fFB21a84ab39F1ac9a4b00fE'
-export const ethDaiPoolAddress = '0x95f917bD85d0aa741bC8e2AC6b69e8427c991F5b'
+export const daiAddress = '0x6b175474e89094c44da98b954eedeac495271d0f'
+export const wethAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+export const ethDaiPoolAddress = '0xC2e9F25Be6257c210d7Adf0D4Cd6E3E881ba25f8'
 export const faucetAddress = '0x1EADf7c1428b91239D9a51dD3e895eEA13B033fC'
 
 export const MaxUint128 = BigNumber.from(2).pow(128).sub(1)

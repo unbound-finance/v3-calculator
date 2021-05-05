@@ -153,9 +153,9 @@ class WalletProvider {
 
       this.chainId = await this.getChainId()
 
-      if (String(this.chainId) !== '42') {
+      if (String(this.chainId) !== '1') {
         this.disconnect()
-        throw new Error('Network not supported, please switch to Kovan Network')
+        throw new Error('Network not supported, please switch to mainnet')
       }
 
       this.address = await this.getAddress()

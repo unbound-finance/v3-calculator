@@ -373,8 +373,8 @@ export default {
       this.ui.loading = true
       this.$store
         .dispatch('mint', {
-          amount0: this.currency === 'ETH-DAI' ? this.ethAmount : this.amountA,
-          amount1: this.currency === 'ETH-DAI' ? this.daiAmount : this.amountB,
+          amount0: this.currency === 'ETH-DAI' ? this.daiAmount : this.amountB,
+          amount1: this.currency === 'ETH-DAI' ? this.ethAmount : this.amountA,
         })
         .then(({ wait }) => {
           this.ui.loading = false

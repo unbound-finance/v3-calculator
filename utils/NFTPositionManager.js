@@ -58,8 +58,8 @@ class NFTPositionManager {
     const userAddress = this.wallet.address
 
     console.log({
-      token0, // weth
-      token1, // dai
+      token0, // dai
+      token1, // weth
       fees,
       tickLower,
       tickUpper,
@@ -67,14 +67,12 @@ class NFTPositionManager {
       amount1,
       minAmount0,
       minAmount1,
-      userAddress,
-      deadline,
     })
 
     // emit mint transaction to network
     return this.nft.mint([
-      token0, // weth
-      token1, // dai
+      token0, // dai
+      token1, // weth
       fees,
       tickLower,
       tickUpper,

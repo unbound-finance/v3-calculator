@@ -14,7 +14,7 @@ export async function getPrice({ poolAddress }) {
   // call slot0.tick
   const { tick } = await pool.slot0()
   // calculate price
-  return { price: 1.0001 ** tick }
+  return { price: 1.0001 ** Math.abs(tick) }
 }
 
 // get ticks by price range
