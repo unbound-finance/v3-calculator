@@ -10,7 +10,7 @@ export const NFTPositionManagerAddress =
 export const daiAddress = '0xF821ddD9068B75F0d906f066590c646085B9fF3a'
 export const wethAddress = '0xf35acA6667C80705fFB21a84ab39F1ac9a4b00fE'
 export const ethDaiPoolAddress = '0x95f917bD85d0aa741bC8e2AC6b69e8427c991F5b'
-export const faucetAddress = '0x1EADf7c1428b91239D9a51dD3e895eEA13B033fC'
+export const faucetAddress = '0x1ba2e2267160A77E94881192272ecfe7DF72c32a'
 
 export const MaxUint128 = BigNumber.from(2).pow(128).sub(1)
 
