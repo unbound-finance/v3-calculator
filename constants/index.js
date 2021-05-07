@@ -5,7 +5,7 @@ const UniswapV3PoolABI = require('./abis/UniswapV3Pool.json')
 const FaucetABI = require('./abis/Faucet.json')
 
 export const NFTPositionManagerAddress =
-  '0xc2e9f25be6257c210d7adf0d4cd6e3e881ba25f8'
+  '0xC36442b4a4522E871399CD717aBDD847Ab11FE88'
 
 export const daiAddress = '0x6b175474e89094c44da98b954eedeac495271d0f'
 export const wethAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'

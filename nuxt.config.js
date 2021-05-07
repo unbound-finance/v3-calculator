@@ -90,7 +90,7 @@ export default {
       },
       uniswapV3Client: {
         httpEndpoint:
-          'https://api.thegraph.com/subgraphs/name/unbound-finance/unbound-v3',
+          'https://api.thegraph.com/subgraphs/name/drcyph3r/unbound-v3-mainnet',
       },
     },
   },
