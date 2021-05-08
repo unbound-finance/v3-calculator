@@ -1,5 +1,6 @@
 import { ChainId, Token } from '@uniswap/sdk-core'
 import { BigNumber } from 'ethers'
+import PoolList from './poolList'
 const NFTPositionManagerABI = require('./abis/NFTPositionManager.json')
 const ERC20ABI = require('./abis/ERC20.json')
 const UniswapV3PoolABI = require('./abis/UniswapV3Pool.json')
@@ -29,5 +30,25 @@ export const WETH = new Token(
   'WETH',
   'Wrapped Ether'
 )
+export const USDC = new Token(
+  ChainId.MAINNET,
+  '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+  6,
+  'USDC',
+  'USD//C'
+)
+export const USDT = new Token(
+  ChainId.MAINNET,
+  '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+  6,
+  'USDT',
+  'Tether USD'
+)
 
-export { ERC20ABI, NFTPositionManagerABI, UniswapV3PoolABI, FaucetABI }
+export {
+  ERC20ABI,
+  NFTPositionManagerABI,
+  UniswapV3PoolABI,
+  FaucetABI,
+  PoolList,
+}
