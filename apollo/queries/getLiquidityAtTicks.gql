@@ -1,0 +1,15 @@
+query($pool: String!, $tickLowerBound: Int!, $tickUpperBound: Int!) {
+  ticks(
+    first: 1000
+    where: {
+      pool: $pool
+      tickIdx_lte: $tickUpperBound
+      tickIdx_gte: $tickLowerBound
+    }
+  ) {
+    tickIdx
+    liquidityNet
+    price0
+    price1
+  }
+}

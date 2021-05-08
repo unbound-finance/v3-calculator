@@ -92,6 +92,10 @@ export default {
         httpEndpoint:
           'https://api.thegraph.com/subgraphs/name/unbound-finance/unbound-v3',
       },
+      uniswapV3SubgraphClient: {
+        httpEndpoint:
+          'https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-v3-alt',
+      },
     },
   },
 }
