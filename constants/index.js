@@ -1,3 +1,4 @@
+import { ChainId, Token } from '@uniswap/sdk-core'
 import { BigNumber } from 'ethers'
 const NFTPositionManagerABI = require('./abis/NFTPositionManager.json')
 const ERC20ABI = require('./abis/ERC20.json')
@@ -13,5 +14,20 @@ export const ethDaiPoolAddress = '0x95f917bD85d0aa741bC8e2AC6b69e8427c991F5b'
 export const faucetAddress = '0x1ba2e2267160A77E94881192272ecfe7DF72c32a'
 
 export const MaxUint128 = BigNumber.from(2).pow(128).sub(1)
+
+export const DAI = new Token(
+  ChainId.MAINNET,
+  '0x6b175474e89094c44da98b954eedeac495271d0f',
+  18,
+  'DAI',
+  'DAI Stablecoin'
+)
+export const WETH = new Token(
+  ChainId.MAINNET,
+  '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  18,
+  'WETH',
+  'Wrapped Ether'
+)
 
 export { ERC20ABI, NFTPositionManagerABI, UniswapV3PoolABI, FaucetABI }

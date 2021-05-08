@@ -23,6 +23,8 @@
           </span>
         </div>
       </div>
+
+      <pre class="font-mono text-sm">{{ liquidityGroup }}</pre>
     </div>
     <div
       v-else
@@ -56,16 +58,19 @@ export default {
     loading: 0,
     color: '#059669',
     rangeGroup: [],
+    liquidityGroup: [],
   }),
 
   watch: {
     ticks() {
       this.sortTicks()
+      this.findLiquidityPerPriceSpacing(200, 2000, 5000)
     },
   },
 
   mounted() {
     this.sortTicks()
+    this.findLiquidityPerPriceSpacing(200, 2000, 5000)
   },
 
   methods: {
@@ -119,6 +124,32 @@ export default {
               totalLiquidity,
             }
           })
+      }
+    },
+
+    findLiquidityPerPriceSpacing(priceSpace, startPrice, endPrice) {
+      const data = this.ticks
+      if (data) {
+        this.liquidityGroup = []
+        let i = startPrice
+        const space = priceSpace
+        for (i; i < endPrice; i += space) {
+          const liquidity = data
+            .filter(({ price1 }) => i + 1 < price1 && price1 < i + priceSpace)
+            .reduce(
+              (sum, { liquidityNet }) =>
+                sum + Math.abs(Number(liquidityNet) / 1e18),
+              0
+            )
+
+          this.liquidityGroup.push({
+            range:
+              i === startPrice
+                ? `${i}-${i + priceSpace}`
+                : `${i + 1}-${i + priceSpace}`,
+            liquidity,
+          })
+        }
       }
     },
   },

@@ -1,5 +1,7 @@
 import { ethers } from 'ethers'
-import { UniswapV3PoolABI } from '../../constants'
+import { priceToClosestTick } from '@uniswap/v3-sdk'
+import { Price } from '@uniswap/sdk-core'
+import { UniswapV3PoolABI, DAI, WETH } from '../../constants'
 import WalletProvider from '../WalletProvider'
 
 // get token1 price w.r.t token0
@@ -13,6 +15,9 @@ export async function getPrice({ poolAddress }) {
   )
   // call slot0.tick
   const { tick } = await pool.slot0()
+
+  const ptot = priceToClosestTick(new Price(WETH, DAI, 1e18, 5000e18))
+  console.log({ ptot })
   // calculate price
   return { price: 1.0001 ** tick }
 }
