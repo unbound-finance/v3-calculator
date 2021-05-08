@@ -85,16 +85,17 @@ export default {
             return arr
           }, [])
           .sort((tickGroupA, tickGroupB) => {
-            const maxLiqA = Math.max(
-              ...tickGroupA.map((tick) =>
-                Math.abs(Number(tick.liquidityNet) / 1e18)
-              )
+            const maxLiqA = tickGroupA.reduce(
+              (sum, { liquidityNet }) =>
+                sum + Math.abs(Number(liquidityNet) / 1e18),
+              0
             )
-            const maxLiqB = Math.max(
-              ...tickGroupB.map((tick) =>
-                Math.abs(Number(tick.liquidityNet) / 1e18)
-              )
+            const maxLiqB = tickGroupB.reduce(
+              (sum, { liquidityNet }) =>
+                sum + Math.abs(Number(liquidityNet) / 1e18),
+              0
             )
+
             return maxLiqB - maxLiqA
           })
           .map((tickGroup) => {
