@@ -58,6 +58,12 @@ export default {
     rangeGroup: [],
   }),
 
+  watch: {
+    ticks() {
+      this.sortTicks()
+    },
+  },
+
   mounted() {
     this.sortTicks()
   },
