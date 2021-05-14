@@ -104,4 +104,7 @@ export const getters = {
   getDaiCount: (state) => {
     return state.dai
   },
+  getChainId: (state) => {
+    return state.chainId
+  },
 }
